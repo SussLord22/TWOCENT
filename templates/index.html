@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FNAF Fangame Voting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 120px);
+            justify-content: center;
+        }
+
+        .header {
+            background-color: #222;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        a {
+            color: #00f;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            border: 2px solid white;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .thumbnail {
+            cursor: pointer;
+        }
+
+        .thumbnails-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .or-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #222;
+            padding: 15px;
+            font-size: 18px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+		
+		.footer a {
+    color: #fff;
+	text-decoration: none;
+}
+    </style>
+    <script>
+        function vote(url1, url2, selected_url) {
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/vote";
+
+            const input1 = document.createElement("input");
+            input1.type = "hidden";
+            input1.name = "url1";
+            input1.value = url1;
+            form.appendChild(input1);
+
+            const input2 = document.createElement("input");
+            input2.type = "hidden";
+            input2.name = "url2";
+            input2.value = url2;
+            form.appendChild(input2);
+
+            const input3 = document.createElement("input");
+            input3.type = "hidden";
+            input3.name = "selected_url";
+            input3.value = selected_url;
+            form.appendChild(input3);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</head>
+<body>
+    <div class="header">TWOCENTS</div>
+    <div class="thumbnails-container">
+        <img src="{{ url1 }}" alt="Thumbnail 1" width="300" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url1 }}')">
+        <span class="or-text">or</span>
+        <img src="{{ url2 }}" alt="Thumbnail 2" width="300" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
+    </div>
+    <div class="footer">
+        <a href="/about">About</a>
+<a href="/leaderboard">Rankings</a>
+</div>
+
+</body>
+</html>
