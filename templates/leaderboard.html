@@ -61,33 +61,42 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        let start = 0;
-        const limit = 20;
+	<script>
+    let start = 0;
+    const limit = 20;
+    let hasMoreEntries = true;
 
-        function loadMoreEntries() {
-            $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
-                const entries = JSON.parse(data);
-                entries.forEach(entry => {
-                    $("#leaderboard").append(
-                        `<li>
-                            <img src="${entry.url}" alt="Thumbnail" width="300">
-                        </li>`
-                    );
-                });
-                start += entries.length;
-            });
+    function loadMoreEntries() {
+        if (!hasMoreEntries) {
+            return;
         }
 
-        $(document).ready(function () {
-            loadMoreEntries();
-            $(window).scroll(function () {
-                if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-                    loadMoreEntries();
-                }
+        $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
+            const entries = JSON.parse(data);
+            if (entries.length < limit) {
+                hasMoreEntries = false;
+            }
+            entries.forEach(entry => {
+                $("#leaderboard").append(
+                    `<li>
+                        <img src="${entry.url}" alt="Thumbnail" width="300">
+                    </li>`
+                );
             });
+            start += entries.length;
         });
-    </script>
+    }
+
+    $(document).ready(function () {
+        loadMoreEntries();
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                loadMoreEntries();
+            }
+        });
+    });
+	</script>
+
 </head>
 <body>
     <div class="header">TWOCENTS</div>
