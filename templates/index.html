@@ -86,31 +86,39 @@
     </style>
     <script>
         function vote(url1, url2, selected_url) {
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = "/vote";
+    // Disable thumbnails
+    const thumbnails = document.getElementsByClassName("thumbnail");
+    for (let i = 0; i < thumbnails.length; i++) {
+        thumbnails[i].style.pointerEvents = "none";
+        thumbnails[i].style.opacity = "0.5";
+    }
 
-            const input1 = document.createElement("input");
-            input1.type = "hidden";
-            input1.name = "url1";
-            input1.value = url1;
-            form.appendChild(input1);
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/vote";
 
-            const input2 = document.createElement("input");
-            input2.type = "hidden";
-            input2.name = "url2";
-            input2.value = url2;
-            form.appendChild(input2);
+    const input1 = document.createElement("input");
+    input1.type = "hidden";
+    input1.name = "url1";
+    input1.value = url1;
+    form.appendChild(input1);
 
-            const input3 = document.createElement("input");
-            input3.type = "hidden";
-            input3.name = "selected_url";
-            input3.value = selected_url;
-            form.appendChild(input3);
+    const input2 = document.createElement("input");
+    input2.type = "hidden";
+    input2.name = "url2";
+    input2.value = url2;
+    form.appendChild(input2);
 
-            document.body.appendChild(form);
-            form.submit();
-        }
+    const input3 = document.createElement("input");
+    input3.type = "hidden";
+    input3.name = "selected_url";
+    input3.value = selected_url;
+    form.appendChild(input3);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
     </script>
 </head>
 <body>
