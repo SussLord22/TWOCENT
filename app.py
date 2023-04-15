@@ -3,9 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import json
 import random
+from sqlalchemy import create_engine
+engine = create_engine(DATABASE_URL)
+
 
 app = Flask(__name__)
 DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 db = SQLAlchemy(app)
