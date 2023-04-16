@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--  fuck you caco :3 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TWOCENT</title>
@@ -44,16 +43,37 @@
         }
 
         img {
-            border: 2px solid white;
-			filter: drop-shadow(0 0 0.75rem black);
+            
+            
+            transition: transform 0.3s;
         }
 
         h1 {
             margin-bottom: 30px;
         }
 
-        .thumbnail {
+        .thumbnail-container {
             cursor: pointer;
+            overflow: hidden;
+            display: inline-block;
+            width: 400px;
+            height: 225px;
+            position: relative;
+			border: 2px solid white;
+			filter: drop-shadow(0 0 0.75rem black);
+        }
+
+        .thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-container:hover .thumbnail {
+            transform: scale(1.025);
         }
 
         .thumbnails-container {
@@ -62,7 +82,7 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 80px;
-			margin-top: 10px;
+            margin-top: 10px;
         }
 
         .or-text {
@@ -93,84 +113,88 @@
         .tagline {
             font-size: 20px;
             margin-top: 100px; /* adjust this value */
-			font-weight: bold;
-			filter: drop-shadow(0 0 0.75rem black);
+            font-weight: bold;
+            filter: drop-shadow(0 0 0.75rem black);
         }
 
         .instructions {
             font-size: 28px;
-           margin-top: 15px;
-		   margin-bottom: 50px;
-		   font-weight: bold;
-		   filter: drop-shadow(0 0 0.75rem black);
-        }
- @media screen and (max-width: 768px) {
-            .thumbnails-container {
-                flex-direction: column;
-            }
+            margin-top: 15px;
+            margin-bottom: 50px;
+            font-weight:bold;
+        filter: drop-shadow(0 0 0.75rem black);
+    }
 
-            .or-text {
-                margin: 20px 0;
-            }
-			
-			.thumbnail {
-				width: 90%;
-			}
-			
-			.tagline {
-				margin-top: 60px;
-			}
+    @media screen and (max-width: 768px) {
+        .thumbnails-container {
+            flex-direction: column;
         }
 
-
-    </style>
-    <script>
-        function vote(url1, url2, selected_url) {
-            // Disable thumbnails
-            const thumbnails = document.getElementsByClassName("thumbnail");
-            for (let i = 0; i < thumbnails.length; i++) {
-                thumbnails[i].style.pointerEvents = "none";
-                thumbnails[i].style.opacity = "0.5";
-            }
-
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = "/vote";
-
-            const input1 = document.createElement("input");
-            input1.type = "hidden";
-            input1.name = "url1";
-            input1.value = url1;
-            form.appendChild(input1);
-
-            const input2 = document.createElement("input");
-            input2.type = "hidden";
-            input2.name = "url2";
-            input2.value = url2;
-            form.appendChild(input2);
-
-            const input3 = document.createElement("input");
-            input3.type = "hidden";
-            input3.name = "selected_url";
-            input3.value = selected_url;
-            form.appendChild(input3);
-
-            document.body.appendChild(form);
-            form.submit();
+        .or-text {
+            margin: 20px 0;
+        }
+        
+        .thumbnail-container {
+            width: 90%;
+            height: auto;
+        }
+        
+        .tagline {
+            margin-top: 60px;
+        }
+    }
+</style>
+<script>
+    function vote(url1, url2, selected_url) {
+        // Disable thumbnails
+        const thumbnails = document.getElementsByClassName("thumbnail-container");
+        for (let i = 0; i < thumbnails.length; i++) {
+            thumbnails[i].style.pointerEvents = "none";
+            thumbnails[i].style.opacity = "0.5";
         }
 
-    </script>
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/vote";
+
+        const input1 = document.createElement("input");
+        input1.type = "hidden";
+        input1.name = "url1";
+        input1.value = url1;
+        form.appendChild(input1);
+
+        const input2 = document.createElement("input");
+        input2.type = "hidden";
+        input2.name = "url2";
+        input2.value = url2;
+        form.appendChild(input2);
+
+        const input3 = document.createElement("input");
+        input3.type = "hidden";
+        input3.name = "selected_url";
+        input3.value = selected_url;
+        form.appendChild(input3);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
 </head>
 <body>
     <div class="header"><a href="/">TWOCENT</a></div>
-        <div class="content">
+    <div class="content">
         <div class="tagline">Not all fangames are created equal</div>
         <div class="instructions">Which Is Better? Click to Choose.</div>
     </div>
     <div class="thumbnails-container">
-        <img src="{{ url1 }}" alt="Thumbnail 1" width="400" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url1 }}')">
+        <div class="thumbnail-container" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url1 }}')">
+            <img src="{{ url1 }}" alt="Thumbnail 1" class="thumbnail">
+        </div>
         <span class="or-text">or</span>
-        <img src="{{ url2 }}" alt="Thumbnail 2" width="400" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
+        <div class="thumbnail-container" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
+            <img src="{{ url2 }}" alt="Thumbnail 2" class="thumbnail">
+        </div>
     </div>
     <div class="footer">
         <a href="/about">About</a>
@@ -178,4 +202,3 @@
     </div>
 </body>
 </html>
-
