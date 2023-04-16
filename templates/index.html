@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <!--  fuck you caco :3 -->
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TWOCENT</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Trebuchet MS', sans-serif;
             background-color: #333;
             color: #fff;
             text-align: center;
@@ -15,7 +15,6 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: calc(100vh - 120px);
             justify-content: center;
         }
 
@@ -30,10 +29,10 @@
             right: 0;
             z-index: 100;
         }
-	   .header a {
-        color: #fff;
-        text-decoration: underline;
-    }
+        .header a {
+            color: #fff;
+            text-decoration: underline;
+        }
 
         a {
             color: #00f;
@@ -62,6 +61,7 @@
             align-items: center;
             gap: 20px;
             margin-bottom: 20px;
+			margin-top: 40px;
         }
 
         .or-text {
@@ -83,62 +83,78 @@
             left: 0;
             right: 0;
         }
-		
-		
-		
-		.footer a {
-    color: #fff;
-	text-decoration: none;
-}
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .tagline {
+            font-size: 20px;
+            margin-top: 100px; /* adjust this value */
+			font-weight: bold;
+        }
+
+        .instructions {
+            font-size: 28px;
+           margin-top: 15px;
+		   margin-bottom: 50px;
+		   font-weight: bold;
+        }
+
     </style>
     <script>
         function vote(url1, url2, selected_url) {
-    // Disable thumbnails
-    const thumbnails = document.getElementsByClassName("thumbnail");
-    for (let i = 0; i < thumbnails.length; i++) {
-        thumbnails[i].style.pointerEvents = "none";
-        thumbnails[i].style.opacity = "0.5";
-    }
+            // Disable thumbnails
+            const thumbnails = document.getElementsByClassName("thumbnail");
+            for (let i = 0; i < thumbnails.length; i++) {
+                thumbnails[i].style.pointerEvents = "none";
+                thumbnails[i].style.opacity = "0.5";
+            }
 
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "/vote";
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/vote";
 
-    const input1 = document.createElement("input");
-    input1.type = "hidden";
-    input1.name = "url1";
-    input1.value = url1;
-    form.appendChild(input1);
+            const input1 = document.createElement("input");
+            input1.type = "hidden";
+            input1.name = "url1";
+            input1.value = url1;
+            form.appendChild(input1);
 
-    const input2 = document.createElement("input");
-    input2.type = "hidden";
-    input2.name = "url2";
-    input2.value = url2;
-    form.appendChild(input2);
+            const input2 = document.createElement("input");
+            input2.type = "hidden";
+            input2.name = "url2";
+            input2.value = url2;
+            form.appendChild(input2);
 
-    const input3 = document.createElement("input");
-    input3.type = "hidden";
-    input3.name = "selected_url";
-    input3.value = selected_url;
-    form.appendChild(input3);
+            const input3 = document.createElement("input");
+            input3.type = "hidden";
+            input3.name = "selected_url";
+            input3.value = selected_url;
+            form.appendChild(input3);
 
-    document.body.appendChild(form);
-    form.submit();
-}
+            document.body.appendChild(form);
+            form.submit();
+        }
 
     </script>
 </head>
 <body>
     <div class="header"><a href="/">TWOCENT</a></div>
+        <div class="content">
+        <div class="tagline">Not all fangames are created equal</div>
+        <div class="instructions">Which Is Better? Click to Choose.</div>
+    </div>
     <div class="thumbnails-container">
-        <img src="{{ url1 }}" alt="Thumbnail 1" width="300" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url1 }}')">
+        <img src="{{ url1 }}" alt="Thumbnail 1" width="400" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url1 }}')">
         <span class="or-text">or</span>
-        <img src="{{ url2 }}" alt="Thumbnail 2" width="300" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
+        <img src="{{ url2 }}" alt="Thumbnail 2" width="400" class="thumbnail" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
     </div>
     <div class="footer">
         <a href="/about">About</a>
-<a href="/leaderboard">Rankings</a>
-</div>
-
+        <a href="/leaderboard">Rankings</a>
+    </div>
 </body>
 </html>
+
