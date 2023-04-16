@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - FNAF Fangame Voting</title>
+    <title>About</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,7 +11,7 @@
             color: #fff;
             text-align: center;
             margin: 0;
-            padding: 0;
+            padding: 60px 0;
             display: flex;
             flex-direction: column;
             min-height: calc(100vh - 120px);
@@ -30,43 +30,44 @@
             z-index: 100;
         }
 
-        .footer {
-            background-color: #222;
-            padding: 15px;
+        a {
+            color: #00f;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        p {
+            margin: 20px 0;
             font-size: 18px;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            line-height: 1.5;
         }
 
-        .footer a {
-            color: #fff;
-            text-decoration: none; /* Add this line to remove underline */
+        .disclaimer {
+            font-style: italic;
+            margin-top: 50px;
+            font-size: 14px;
         }
 
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: left;
+        .contact {
+            margin-top: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="header">TWOCENT</div>
-    <div class="content">
-        <h1>About FNAF Fangame Voting</h1>
-        <p>this websites not fucking done yet, if you're here it's just so we can fill out some data before a real release :33</p>
-    </div>
-    <div class="footer">
-        <a href="/about">About</a>
-        <a href="/leaderboard">Rankings</a>
-    </div>
+    <h1>About</h1>
+    <p>The purpose of this website is to rank fangames found on GameJolt.com. While we hope you enjoy using this website, please understand that the rankings are purely for fun and should not be taken too seriously. We do not intend to insult or offend anyone and welcome feedback to improve the website. </p>
+    <p>If a developer wants their game taken off the website, please send an email to <a href="mailto:codename12345678910@gmail.com">codename12345678910@gmail.com</a>.</p>
+    <p>Every game is owned by the respective owner and their original GameJolt page.</p>
+    <div class="disclaimer">This website is not affiliated with or endorsed by GameJolt.com or any of its affiliates.</div>
+    <div class="contact">If you have any questions or concerns, please do not hesitate to <a href="/contact">contact us</a>.</div>
 </body>
 </html>
