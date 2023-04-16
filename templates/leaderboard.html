@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+    <title>Rankings</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,11 +11,10 @@
             color: #fff;
             text-align: center;
             margin: 0;
-            padding: 60px 0 0 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            justify-content: center;
         }
 
         .header {
@@ -29,7 +28,10 @@
             right: 0;
             z-index: 100;
         }
-
+	   .header a {
+        color: #fff;
+        text-decoration: underline;
+    }
         a {
             color: #00f;
             text-decoration: none;
@@ -47,6 +49,16 @@
             margin-bottom: 30px;
         }
 
+        .thumbnails-wrapper {
+            position: fixed;
+            top: 55px;
+            left: 0;
+            right: 0;
+            bottom: 50px;
+            overflow-y: auto;
+            padding: 0px 20px;
+        }
+
         ol {
             list-style: none;
             padding: 0;
@@ -59,54 +71,90 @@
         li {
             margin: 5px;
         }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-    let start = 0;
-    const limit = 20;
-    let hasMoreEntries = true;
-    let isLoading = false;
 
-    function loadMoreEntries() {
-        if (!hasMoreEntries || isLoading) {
-            return;
+        .footer {
+            background-color: #222;
+            padding: 15px;
+            font-size: 18px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
         }
 
-        isLoading = true;
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let start = 0;
+        const limit = 20;
+        let hasMoreEntries = true;
+        let isLoading = false;
 
-        $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
-            const entries = JSON.parse(data);
-            if (entries.length < limit) {
-                hasMoreEntries = false;
+        function debounce(func, wait) {
+            let timeout;
+            return function () {
+                const context = this, args = arguments;
+                const later = function () {
+                    timeout = null;
+                    func.apply(context, args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function loadMoreEntries() {
+            if (!hasMoreEntries || isLoading) {
+                return;
             }
-            entries.forEach(entry => {
-                $("#leaderboard").append(
-                    `<li>
-                        <img src="${entry.url}" alt="Thumbnail" width="300">
-                    </li>`
-                );
+
+            isLoading = true;
+
+            $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
+                const entries = JSON.parse(data);
+                if (entries.length < limit) {
+                    hasMoreEntries = false;
+                }
+                entries.forEach(entry => {
+                    $("#leaderboard").append(
+                        `<li>
+                            <img src="${entry.url}" alt="Thumbnail" width="300">
+                        </li>`
+                    );
+                });
+                start += entries.length;
+                isLoading = false;
             });
-            start += entries.length;
-            isLoading = false;
+        }
+
+        $(document).ready(function () {
+            loadMoreEntries();
+            $('.thumbnails-wrapper').scroll(debounce(function () {
+                if ($('.thumbnails-wrapper').scrollTop() + $('.thumbnails-wrapper').height() > $('#leaderboard').height() - 100) {
+                    loadMoreEntries();
+                }
+            }, 300));
         });
-    }
-
-    $(document).ready(function () {
-        loadMoreEntries();
-        $(window).scroll(function () {
-            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-                loadMoreEntries();
-            }
-        });
-    });
-</script>
-
-
+    </script>
 </head>
 <body>
-    <div class="header">TWOCENT</div>
-    <h1>RANKINGS</h1>
-    <ol id="leaderboard"></ol>
-    <a href="/">Vote Again</a>
+    <div class="header"><a href="/">TWOCENT</a></div>
+    <div
+    <div class="thumbnails-wrapper">
+        <ol id="leaderboard"></ol>
+    </div>
+    <div class="footer">
+        <a href="/about">About</a>
+        <a href="/leaderboard">Rankings</a>
+    </div>
 </body>
 </html>
