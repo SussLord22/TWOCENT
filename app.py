@@ -5,7 +5,7 @@ import json
 import random
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL") or "sqlite:///fnafsmash.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://zfnckxqbifqxcv:9521a2e03b4a771d2981c3e9a6352762fd1a091f0f00e071402cdb1a37132a2a@ec2-3-232-103-50.compute-1.amazonaws.com:5432/dbb9h2lpqhno9h" or "sqlite:///fnafsmash.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
