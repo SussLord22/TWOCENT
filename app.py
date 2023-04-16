@@ -81,7 +81,7 @@ def load_more_leaderboard_entries():
     start = int(request.form.get("start"))
     limit = int(request.form.get("limit"))
     entries = (
-        LeaderboardEntry.query.order_by(LeaderboardEntry.elo.desc())
+        LeaderboardEntry.query.order_by(LeaderboardEntry.elo.desc(), LeaderboardEntry.id.asc())
         .offset(start)
         .limit(limit)
         .all()
@@ -90,6 +90,7 @@ def load_more_leaderboard_entries():
         {"url": entry.url, "elo": entry.elo, "id": entry.id} for entry in entries
     ]
     return json.dumps(entries_data)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
