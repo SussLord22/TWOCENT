@@ -65,11 +65,14 @@
     let start = 0;
     const limit = 20;
     let hasMoreEntries = true;
+    let isLoading = false;
 
     function loadMoreEntries() {
-        if (!hasMoreEntries) {
+        if (!hasMoreEntries || isLoading) {
             return;
         }
+
+        isLoading = true;
 
         $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
             const entries = JSON.parse(data);
@@ -84,6 +87,7 @@
                 );
             });
             start += entries.length;
+            isLoading = false;
         });
     }
 
@@ -95,7 +99,8 @@
             }
         });
     });
-	</script>
+</script>
+
 
 </head>
 <body>
