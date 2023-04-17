@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import json
 import random
+from flask import make_response
+from datetime import timedelta
 
 
 uri = os.getenv("DATABASE_URL")  # or other relevant config var
@@ -75,6 +77,18 @@ def vote():
 @app.route("/leaderboard")
 def show_leaderboard():
     return render_template("leaderboard.html")
+
+@app.route('/static/twocent.png')
+def serve_twocent_image():
+    with open('static/twocent.png', 'rb') as img:
+        img_data = img.read()
+
+    response = make_response(img_data)
+    response.headers.set('Content-Type', 'image/png')
+    response.headers.set('Cache-Control', 'public, max-age={}'.format(int(timedelta(days=30).total_seconds())))
+    return response
+
+
 
 @app.route("/leaderboard/load_more", methods=["POST"])
 def load_more_leaderboard_entries():
