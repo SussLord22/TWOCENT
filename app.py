@@ -4,6 +4,7 @@ import os
 import json
 import random
 from flask import make_response
+from flask import make_response, send_from_directory
 from datetime import timedelta
 
 
@@ -63,7 +64,6 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html")
-
 
 @app.route("/vote", methods=["POST"])
 def vote():
