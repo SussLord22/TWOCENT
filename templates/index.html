@@ -17,9 +17,17 @@
             justify-content: center;
         }
 
-        .header {
+        .header-logo {
+            max-height: 35px; /* Adjust this value according to your preferred logo size */
+            display: inline-block;
+            vertical-align: middle;
+        }
+		
+		
+		
+		.header {
             background-color: #131314;
-            padding: 15px;
+            padding: 5px 15px; /* Adjust the padding to prevent the header from becoming too large */
             font-size: 24px;
             font-weight: bold;
             position: fixed;
@@ -218,7 +226,9 @@
 </script>
 </head>
 <body>
-    <div class="header"><a href="/">TWOCENT</a></div>
+    <div class="header">
+        <a href="/"><img src="static/twocent.png" alt="TWOCENT" class="header-logo"></a>
+    </div>
     <div class="content">
         <div class="tagline">Not all fangames are created equal</div>
         <div class="instructions">Which Is Better? Click to Choose.</div>

@@ -18,9 +18,17 @@
             justify-content: center;
         }
 
-        .header {
+        .header-logo {
+            max-height: 35px; /* Adjust this value according to your preferred logo size */
+            display: inline-block;
+            vertical-align: middle;
+        }
+		
+		
+		
+		.header {
             background-color: #131314;
-            padding: 15px;
+            padding: 5px 15px; /* Adjust the padding to prevent the header from becoming too large */
             font-size: 24px;
             font-weight: bold;
             position: fixed;
@@ -33,10 +41,7 @@
         color: #fff;
         text-decoration: underline;
     }
-.logo {
-     max-height: 6%;
-    max-width: 6%;
-}
+
         a {
             color: #00f;
             text-decoration: none;
@@ -85,7 +90,9 @@
     </style>
 </head>
 <body>
-    <div class="header"><a href="/"><img src="/static/twocent.png" alt="TWOCENT" class="logo"></a></div>
+    <div class="header">
+        <a href="/"><img src="static/twocent.png" alt="TWOCENT" class="header-logo"></a>
+    </div>
     <div class="about-content">
         <h1>About TWOCENT</h1>
         <p>
