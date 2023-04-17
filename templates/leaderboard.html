@@ -122,29 +122,33 @@
             };
         }
 
-        function loadMoreEntries() {
-            if (!hasMoreEntries || isLoading) {
-                return;
-            }
+     function loadMoreEntries() {
+    if (!hasMoreEntries || isLoading) {
+        return;
+    }
 
-            isLoading = true;
+    isLoading = true;
 
-            $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
-                const entries = JSON.parse(data);
-                if (entries.length < limit) {
-                    hasMoreEntries = false;
-                }
-                entries.forEach(entry => {
-                    $("#leaderboard").append(
-                        `<li>
-                            <img src="${entry.url}" alt="Thumbnail" width="400">
-                        </li>`
-                    );
-                });
-                start += entries.length;
-                isLoading = false;
-            });
+    $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
+        const entries = JSON.parse(data);
+        if (entries.length < limit) {
+            hasMoreEntries = false;
         }
+        entries.forEach(entry => {
+            const existingEntry = $(`#leaderboard li img[src="${entry.url}"]`);
+            if (!existingEntry.length) {
+                $("#leaderboard").append(
+                    `<li>
+                        <img src="${entry.url}" alt="Thumbnail" width="400">
+                    </li>`
+                );
+            }
+        });
+        start += entries.length;
+        isLoading = false;
+    });
+}
+
 
         $(document).ready(function () {
             loadMoreEntries();
