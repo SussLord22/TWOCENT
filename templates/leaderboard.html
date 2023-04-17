@@ -56,7 +56,14 @@
 			border-radius: 5px;
         }
 
-        h1 {
+        .rank {
+    font-weight: bold;
+    margin-bottom: 10px;
+	filter: drop-shadow(2px 2px 1px black);
+	}
+	
+		
+		h1 {
             margin-bottom: 30px;
         }
 
@@ -125,32 +132,34 @@
             };
         }
 
-     function loadMoreEntries() {
-    if (!hasMoreEntries || isLoading) {
-        return;
-    }
-
-    isLoading = true;
-
-    $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
-        const entries = JSON.parse(data);
-        if (entries.length < limit) {
-            hasMoreEntries = false;
+         function loadMoreEntries() {
+        if (!hasMoreEntries || isLoading) {
+            return;
         }
-        entries.forEach(entry => {
-            const existingEntry = $(`#leaderboard li img[src="${entry.url}"]`);
-            if (!existingEntry.length) {
-                $("#leaderboard").append(
-                    `<li>
-                        <img src="${entry.url}" alt="Thumbnail" width="400">
-                    </li>`
-                );
+
+        isLoading = true;
+
+        $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
+            const entries = JSON.parse(data);
+            if (entries.length < limit) {
+                hasMoreEntries = false;
             }
+            entries.forEach((entry, index) => {
+                const rank = start + index + 1;
+                const existingEntry = $(`#leaderboard li img[src="${entry.url}"]`);
+                if (!existingEntry.length) {
+                    $("#leaderboard").append(
+                        `<li>
+                            <div class="rank">Rank: ${rank}</div>
+                            <img src="${entry.url}" alt="Thumbnail" width="400">
+                        </li>`
+                    );
+                }
+            });
+            start += entries.length;
+            isLoading = false;
         });
-        start += entries.length;
-        isLoading = false;
-    });
-}
+    }
 
 
         $(document).ready(function () {
