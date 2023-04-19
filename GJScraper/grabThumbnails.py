@@ -15,13 +15,13 @@ def init_driver():
     return driver
 
 def scrape_thumbnails(driver, url, num_thumbnails):
-    thumbnail_urls = set()
+    thumbnail_data = set()
     
     driver.get(url)
     
     last_scroll_height = driver.execute_script("return document.body.scrollHeight;")
-    while len(thumbnail_urls) < num_thumbnails:
-        initial_len = len(thumbnail_urls)
+    while len(thumbnail_data) < num_thumbnails:
+        initial_len = len(thumbnail_data)
         
         driver.execute_script("window.scrollBy(0, 200);")
         time.sleep(1)
@@ -37,26 +37,31 @@ def scrape_thumbnails(driver, url, num_thumbnails):
         game_grid_items = soup.find_all("div", class_="game-grid-item")
         
         for item in game_grid_items:
-            thumbnail = item.find("img", class_=lambda x: x in ["img-responsive -img", "-media"])
-            if thumbnail:
-                thumbnail_url = thumbnail["src"]
-                thumbnail_urls.add(thumbnail_url)
+            anchor = item.find("a", class_="game-thumbnail")
+            if anchor:
+                game_url = "https://gamejolt.com" + anchor["href"]
+                game_title = anchor.find("div", class_="-title")
+                if game_title:
+                    game_title = game_title.get_text(strip=True)
+                thumbnail = item.find("img", class_=lambda x: x in ["img-responsive -img", "-media"])
+                if thumbnail:
+                    thumbnail_url = thumbnail["src"]
+                    thumbnail_data.add(f"{thumbnail_url}B2B--B2B{game_title}B2B--B2B{game_url}")
                 
-            if len(thumbnail_urls) >= num_thumbnails:
+            if len(thumbnail_data) >= num_thumbnails:
                 break
         
-        print(f"Current number of thumbnails: {len(thumbnail_urls)}")
+        print(f"Current number of thumbnails: {len(thumbnail_data)}")
     
-    return list(thumbnail_urls)[:num_thumbnails]
-
+    return list(thumbnail_data)[:num_thumbnails]
 
 if __name__ == "__main__":
     url = "https://gamejolt.com/games/best/tag-fnaf"
-    num_thumbnails = 2000
+    num_thumbnails = 35
     
     driver = init_driver()
     thumbnail_urls = scrape_thumbnails(driver, url, num_thumbnails)
     driver.quit()
     
-    with open("thumbnail_urls.json", "w") as f:
+    with open("thumbnail_data.json", "w") as f:
         json.dump(thumbnail_urls, f)

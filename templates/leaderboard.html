@@ -67,7 +67,14 @@
             margin-bottom: 30px;
         }
 
-        .thumbnails-wrapper {
+         .game-title {
+        color: #fff;
+    }
+
+
+
+
+	   .thumbnails-wrapper {
             position: fixed;
             top: 55px;
             left: 0;
@@ -139,26 +146,26 @@
 
         isLoading = true;
 
-        $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
-            const entries = JSON.parse(data);
-            if (entries.length < limit) {
-                hasMoreEntries = false;
+       $.post("/leaderboard/load_more", {start: start, limit: limit}, function (data) {
+        const entries = JSON.parse(data);
+        if (entries.length < limit) {
+            hasMoreEntries = false;
+        }
+        entries.forEach((entry, index) => {
+            const rank = start + index + 1;
+            const existingEntry = $(`#leaderboard li img[src="${entry.url}"]`);
+            if (!existingEntry.length) {
+                $("#leaderboard").append(
+                    `<li>
+                        <div class="rank">#${rank}. <a href="${entry.game_url}" target="_blank" class="game-title">${entry.title}</a></div>
+                        <img src="${entry.url}" alt="Thumbnail" width="400">
+                    </li>`
+                );
             }
-            entries.forEach((entry, index) => {
-                const rank = start + index + 1;
-                const existingEntry = $(`#leaderboard li img[src="${entry.url}"]`);
-                if (!existingEntry.length) {
-                    $("#leaderboard").append(
-                        `<li>
-                            <div class="rank">Rank: ${rank}</div>
-                            <img src="${entry.url}" alt="Thumbnail" width="400">
-                        </li>`
-                    );
-                }
-            });
-            start += entries.length;
-            isLoading = false;
         });
+        start += entries.length;
+        isLoading = false;
+    });
     }
 
 

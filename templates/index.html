@@ -63,39 +63,46 @@
             margin-bottom: 30px;
         }
 
-      .thumbnail-container {
+     .thumbnail-container {
     cursor: pointer;
     overflow: hidden;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
     width: 400px;
     height: 225px;
     position: relative;
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 
-        .thumbnail {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-			 border-radius: 10px;
-        }
+
+      .thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
         .thumbnail-container:hover .thumbnail {
             transform: scale(1.025);
         }
 
-        .thumbnails-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 80px;
-            margin-top: 10px;
-        }
+      .thumbnails-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 80px;
+    margin-top: 10px;
+}
+
+.single-thumbnail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
         .or-text {
             font-size: 24px;
@@ -136,6 +143,28 @@
             margin-bottom: 50px;
             font-weight:bold;
         filter: drop-shadow(0 0 0.75rem black);
+		}
+	.thumbnail-title {
+    font-size: 16px;
+    margin-top: 5px;
+    text-align: center;
+	color: #fff;
+    width: 100%;
+	font-weight: bold;
+	filter: drop-shadow(0 0 0.25rem black);
+}
+
+.thumbnail-title a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.thumbnail-title a:hover {
+    text-decoration: underline;
+}
+		
+		
+		
     }
     @media screen and (max-width: 1024px) {
 
@@ -145,7 +174,12 @@
         padding: 0;
     }
     
-    .thumbnails-container {
+    .thumbnail-title {
+        font-size: 14px;
+    }
+	
+	
+	 .thumbnails-container {
         flex-direction: column;
         gap: 15px;
         margin-bottom: 80px;
@@ -236,14 +270,26 @@
         <div class="tagline">Not all fangames are created equal</div>
         <div class="instructions">Which Is Better? Click to Choose.</div>
     </div>
-    <div class="thumbnails-container">
+ <div class="thumbnails-container">
+    <div class="single-thumbnail-container">
         <div class="thumbnail-container" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url1 }}')">
             <img src="{{ url1 }}" alt="Thumbnail 1" class="thumbnail">
         </div>
-        <span class="or-text">or</span>
+        <div class="thumbnail-title">
+            <a href="{{ game_link1 }}" target="_blank">{{ title1 }}</a>
+        </div>
+    </div>
+    <span class="or-text">or</span>
+    <div class="single-thumbnail-container">
         <div class="thumbnail-container" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
             <img src="{{ url2 }}" alt="Thumbnail 2" class="thumbnail">
         </div>
+        <div class="thumbnail-title">
+            <a href="{{ game_link2 }}" target="_blank">{{ title2 }}</a>
+        </div>
+    </div>
+</div>
+
     </div>
     <div class="footer">
         <a href="/about">About</a>
