@@ -63,14 +63,21 @@
             margin-bottom: 30px;
         }
 
-   .thumbnails-container {
+  .thumbnails-container {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
     margin-bottom: 80px;
     margin-top: 10px;
-    flex-wrap: wrap;
+}
+
+.or-text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 50px;
 }
 
 
@@ -169,7 +176,7 @@
 		
 		
 		
-    }
+    
    @media screen and (max-width: 1024px) {
 
     body {
@@ -183,10 +190,20 @@
     }
     
     .thumbnails-container {
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 80px;
-    }
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+}
+
+.single-thumbnail-container:not(:first-child) {
+    margin-top: 0;
+}
+
+
+  .or-text-container {
+    display: none;
+}
+
 
     .or-text {
         margin: 0;
