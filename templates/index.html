@@ -63,19 +63,15 @@
             margin-bottom: 30px;
         }
 
-     .thumbnail-container {
-    cursor: pointer;
-    overflow: hidden;
-    display: inline-flex;
-    flex-direction: column;
+   .thumbnails-container {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    width: 400px;
-    height: 225px;
-    position: relative;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 80px;
+    margin-top: 10px;
+    flex-wrap: wrap;
 }
-
 
 
       .thumbnail {
@@ -137,6 +133,14 @@
             filter: drop-shadow(0 0 0.75rem black);
         }
 
+		.warning {
+            font-size: 20px;
+            margin-top: 100px; 
+            font-weight: bold;
+            filter: drop-shadow(0 0 0.75rem black);
+			color: red;
+        }
+
         .instructions {
             font-size: 28px;
             margin-top: 15px;
@@ -166,7 +170,7 @@
 		
 		
     }
-    @media screen and (max-width: 1024px) {
+   @media screen and (max-width: 1024px) {
 
     body {
         justify-content: space-between;
@@ -177,9 +181,8 @@
     .thumbnail-title {
         font-size: 14px;
     }
-	
-	
-	 .thumbnails-container {
+    
+    .thumbnails-container {
         flex-direction: column;
         gap: 15px;
         margin-bottom: 80px;
@@ -267,7 +270,8 @@
         <a href="/"><img src="static/twocent.png" alt="TWOCENT" class="header-logo"></a>
     </div>
     <div class="content">
-        <div class="tagline">Not all fangames are created equal</div>
+        <div class="warning">The database is currently being updated.  The website may not function properly while this is going on.  Thank you for your patience.</div>
+		<div class="tagline">Not all fangames are created equal</div>
         <div class="instructions">Which Is Better? Click to Choose.</div>
     </div>
  <div class="thumbnails-container">
@@ -279,7 +283,9 @@
             <a href="{{ game_link1 }}" target="_blank">{{ title1 }}</a>
         </div>
     </div>
-    <span class="or-text">or</span>
+    <div class="or-text-container">
+        <span class="or-text">or</span>
+    </div>
     <div class="single-thumbnail-container">
         <div class="thumbnail-container" onclick="vote('{{ url1 }}', '{{ url2 }}', '{{ url2 }}')">
             <img src="{{ url2 }}" alt="Thumbnail 2" class="thumbnail">
@@ -289,6 +295,7 @@
         </div>
     </div>
 </div>
+
 
     </div>
     <div class="footer">

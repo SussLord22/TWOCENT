@@ -57,7 +57,7 @@ def scrape_thumbnails(driver, url, num_thumbnails):
 
 if __name__ == "__main__":
     url = "https://gamejolt.com/games/best/tag-fnaf"
-    num_thumbnails = 35
+    num_thumbnails = 2000
     
     driver = init_driver()
     thumbnail_urls = scrape_thumbnails(driver, url, num_thumbnails)
