@@ -61,18 +61,24 @@ def update_elo(url1, url2, winner_url):
 
 @app.route("/")
 def home():
-    url1_data, url2_data = random.sample(urls, 2)
-    url1_parts = url1_data.split("B2B--B2B")
-    url2_parts = url2_data.split("B2B--B2B")
+    while True:
+        url1_data, url2_data = random.sample(urls, 2)
+        url1_parts = url1_data.split("B2B--B2B")
+        url2_parts = url2_data.split("B2B--B2B")
 
-    url1 = url1_parts[0]
-    title1 = url1_parts[1]
-    game_link1 = url1_parts[2]
-    url2 = url2_parts[0]
-    title2 = url2_parts[1]
-    game_link2 = url2_parts[2]
+        url1 = url1_parts[0]
+        title1 = url1_parts[1]
+        game_link1 = url1_parts[2]
+        url2 = url2_parts[0]
+        title2 = url2_parts[1]
+        game_link2 = url2_parts[2]
+
+        # Ensure both urls are non-empty
+        if url1 and url2:
+            break
 
     return render_template("index.html", url1=url1, url2=url2, title1=title1, title2=title2, game_link1=game_link1, game_link2=game_link2)
+
 
 
 @app.route("/about")
