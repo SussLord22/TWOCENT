@@ -8,20 +8,16 @@ from flask import make_response, send_from_directory
 from datetime import timedelta
 
 
-uri = os.getenv("DATABASE_URL")  # or other relevant config var
+uri = os.getenv("DATABASE_URL")  
 if uri and uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
-# rest of connection code using the connection string `uri`
-
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = uri or "sqlite:///fnafsmash.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
-
 db = SQLAlchemy(app)
-
 
 class LeaderboardEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -79,8 +75,6 @@ def home():
 
     return render_template("index.html", url1=url1, url2=url2, title1=title1, title2=title2, game_link1=game_link1, game_link2=game_link2)
 
-
-
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -107,8 +101,6 @@ def serve_twocent_image():
     response.headers.set('Content-Type', 'image/png')
     response.headers.set('Cache-Control', 'public, max-age={}'.format(int(timedelta(days=30).total_seconds())))
     return response
-
-
 
 @app.route("/leaderboard/load_more", methods=["POST"])
 def load_more_leaderboard_entries():
@@ -138,9 +130,6 @@ def get_game_url_from_url(url):
         if thumbnail_url == url:
             return game_url
     return None
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
